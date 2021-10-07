@@ -10,7 +10,7 @@ router.get("/userprofile", async (req, res) => {
   
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(500).json(error.message);
     }
   });
 
@@ -28,14 +28,14 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/users/:id", async (req, res) => {
     try {
-        await Post.findByIdAndRemove(req.session.currentUser._id);
+        await User.findByIdAndRemove(req.params.id);
         // if (post.userId == req.body.userId) {
         //     await post.deleteOne()
         // }
-        res.status(200).json({message: `Post with id ${req.session.currentUser._id} was deleted`})
+        res.status(200).json({message: `User ${req.params.id} was deleted`})
     // } else { res.status(500).json("You can only delete your post")}
     } catch(e) {
-        res.status(500).json({message: e});
+        res.status(500).json({message: e.message});
     }
 });
 
