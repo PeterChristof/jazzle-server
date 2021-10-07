@@ -26,12 +26,12 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     cookie: {
-      //sameSite: "none", //both fe and be are running on the same hostname  **********FOR DEPLOYMENT
-      sameSite: true,  // WORK ON LOCALS
-      //httpOnly: false **********FOR DEPLOYMENT
-      httpOnly: true, //we are not using https WORK ON LOCALS
+      sameSite: "none", //both fe and be are running on the same hostname  **********FOR DEPLOYMENT
+      //sameSite: true,  // WORK ON LOCALS
+      httpOnly: false, // **********FOR DEPLOYMENT
+      //httpOnly: true, //we are not using https WORK ON LOCALS
       maxAge: 360000, //session time
-      //secure: true, **********FOR DEPLOYMENT
+      secure: true, // **********FOR DEPLOYMENT
     },
     rolling: true,
   })
@@ -39,7 +39,8 @@ app.use(
 
 // default value for title local
 const projectName = "project-management-server";
-const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
+const capitalized = (string) =>
+  string[0].toUpperCase() + string.slice(1).toLowerCase();
 
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`;
 
@@ -50,10 +51,10 @@ app.use("/", index);
 const post = require("./routes/post");
 app.use("/", post);
 
-const auth = require ("./routes/auth");
+const auth = require("./routes/auth");
 app.use("/", auth);
 
-const user = require ("./routes/user");
+const user = require("./routes/user");
 app.use("/", user);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
